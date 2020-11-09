@@ -1,12 +1,12 @@
 from flask import Blueprint
-from .github import GitHub
 from flask import current_app, request, redirect, url_for
+from forker.core.github import GitHub
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/login', methods=['GET'])
 def login():
-    return GitHub(current_app).authorize('public_repo')
+    return GitHub(current_app).authorize('public_repo,read:user')
 
 @bp.route('/callback', methods=['GET'])
 def callback():
