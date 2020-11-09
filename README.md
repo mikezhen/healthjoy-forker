@@ -22,6 +22,8 @@ docker-compose up
 
 ## Manual Setup
 
+(Disclaimer: The following instructions are for MacOS and possibly Unix)
+
 1. Set the necessary environment variables for local development. Reach out to project owner for values of `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
 
 ```bash
@@ -34,13 +36,13 @@ export GITHUB_CLIENT_SECRET=value_from_owner
 1. Compile the web component to static files for the web app with the following command in root project directory:
 
 ```bash
-npm run --prefix=web build && cp web/build forker/static
+npm run --prefix=web build && cp -r web/build forker/static
 ```
 
 1. Run following command to install the local forker package:
 
 ```bash
-pip install .
+pip3 install .
 ```
 
 1. Start the Flask server:
