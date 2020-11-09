@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  webapp:
+    build:
+      context: .
+    environment:
+      FLASK_APP: forker
+      SECRET_KEY: development
+      GITHUB_CLIENT_ID: replace_me_with_id
+      GITHUB_CLIENT_SECRET: replace_me_with_secret
+    ports: 
+      - 5000:5000
+    command: flask run --host=0.0.0.0
+    
+
