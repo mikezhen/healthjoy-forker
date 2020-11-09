@@ -47,12 +47,12 @@ class GitHub:
         owner = self.app.config.get('GITHUB_REPO_OWNER')
         repo = self.app.config.get('GITHUB_REPO_NAME')
         headers = {
-            'Authorization': self._get_authorization_header()
+            'Authorization': self._get_authorization_header(self.access_token)
         }
         url = f'{self.api_url}/repos/{owner}/{repo}/forks'
         response = requests.post(url, headers=headers)
         ## Check for response status: https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#forks
         return response
 
-    def _get_authorization_header(self):
-        return f'token {self.access_token}'
+    def _get_authorization_header(self, access_token: str):
+        return f'token {access_token}'
