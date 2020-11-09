@@ -6,4 +6,11 @@
 .alert {
   z-index: 1;
   text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#forked-repo {
+  margin-top: 1em;
 }

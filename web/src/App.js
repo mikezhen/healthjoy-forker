@@ -11,7 +11,8 @@ class App extends Component {
 
     this.state = {
       authenticated: false,
-      alert: null
+      alert: null,
+      repoUrl: null,
     }
   }
 
@@ -24,7 +25,7 @@ class App extends Component {
   }
 
   isAuthenticated() {
-    return this.state.authenticated
+    return this.state.authenticated;
   }
 
   forkRepo() {
@@ -37,7 +38,7 @@ class App extends Component {
               status: 'success',
               message: 'Successfully forked the repo as your own.'
             }
-          });
+          }, this.clearAlert);
         } else {
           this.setState({
             alert: {
@@ -46,7 +47,9 @@ class App extends Component {
             }
           }, this.clearAlert)
         }
+        return resp.json();
       })
+      .then(data => this.setState({ repoUrl: data['html_url'] }))
   }
 
   clearAlert() {
@@ -61,8 +64,7 @@ class App extends Component {
             <div className={`alert alert-${this.state.alert?.status}`} role="alert">
               <h4>{this.state.alert?.message}</h4>
             </div>
-            :
-            null
+            : null
         }
         <div className="App">
           <h2>Welcome to HealthJoy Forker</h2>
@@ -78,6 +80,14 @@ class App extends Component {
             <a href="/auth/login" className="btn btn-primary">
               <i className="fab fa-github" /> Sign in with Github
             </a>
+          }
+          {
+            this.state.repoUrl ? 
+              <div id="forked-repo">
+                <h6>Forked Repo:</h6>
+                <a href={this.state.repoUrl}>{this.state.repoUrl}</a>
+              </div>
+              : null
           }
         </div>
       </Fragment>
