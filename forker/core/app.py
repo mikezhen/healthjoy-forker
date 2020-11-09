@@ -12,7 +12,7 @@ def create_app(config_file: str) -> Flask:
     Returns:
         Flask application instance
     """
-    app = Flask(__name__, static_folder='../../web/build', static_url_path='/')
+    app = Flask(__name__, static_folder='../static', static_url_path='/')
 
     app.config.from_pyfile(config_file)
 
