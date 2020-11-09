@@ -48,6 +48,7 @@ class GitHub:
         return response
 
     def create_fork(self, access_token: str) -> requests.Response:
+        """Creates fork from configured repo using user's access token"""
         owner = self.app.config.get('GITHUB_FORK_OWNER')
         repo = self.app.config.get('GITHUB_FORK_NAME')
         headers = {
@@ -63,6 +64,7 @@ class GitHub:
         return f'token {access_token}'
 
     def get_user(self, access_token: str) -> requests.Response:
+        """Get user info from access token"""
         headers = {
             'Accept': 'application/json',
             'Authorization': self._format_authorization_header(access_token)
