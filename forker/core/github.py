@@ -30,6 +30,7 @@ class GitHub:
         return redirect(url)
     
     def access_token(self, code: str) -> requests.Response:
+        """Retrieves access token with temporary session code"""
         headers = {
             'Accept': 'application/json'
         }
@@ -42,16 +43,28 @@ class GitHub:
         response = requests.post(url, headers=headers)
         return response
 
-    def create_fork(self) -> requests.Response:
+    def create_fork(self, access_token: str) -> requests.Response:
         owner = self.app.config.get('GITHUB_FORK_OWNER')
         repo = self.app.config.get('GITHUB_FORK_NAME')
         headers = {
-            'Authorization': self._get_authorization_header(self.access_token)
+            'Authorization': self._format_authorization_header(access_token)
         }
         url = f'{self.api_url}/repos/{owner}/{repo}/forks'
         response = requests.post(url, headers=headers)
         ## Check for response status: https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#forks
         return response
 
-    def _get_authorization_header(self, access_token: str):
+    def _format_authorization_header(self, access_token: str):
+        """Format authorization header with access token"""
         return f'token {access_token}'
+
+    def get_user(self, access_token: str) -> requests.Response:
+        headers = {
+            'Accept': 'application/json',
+            'Authorization': self._format_authorization_header(access_token)
+        }
+        url = f'{self.api_url}/user'
+        response = requests.get(url, headers=headers)
+        print(url)
+        print(response.status_code)
+        return response
