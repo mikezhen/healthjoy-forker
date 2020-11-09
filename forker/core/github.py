@@ -1,5 +1,7 @@
 import requests
-from flask import Flask, redirect, Response
+from flask import (
+    Flask, redirect, Response, current_app
+)
 from urllib.parse import urlencode
 
 class GitHub:
@@ -27,6 +29,7 @@ class GitHub:
             params['scope'] = scope
         
         url = f'{self.auth_url}/authorize?{urlencode(params)}'
+        current_app.logger.info(f'Redirecting to {url}')
         return redirect(url)
     
     def access_token(self, code: str) -> requests.Response:
@@ -41,6 +44,7 @@ class GitHub:
         }
         url = f'{self.auth_url}/access_token?{urlencode(params)}'
         response = requests.post(url, headers=headers)
+        current_app.logger.info(f'Got {response} from {url}')
         return response
 
     def create_fork(self, access_token: str) -> requests.Response:
@@ -51,7 +55,7 @@ class GitHub:
         }
         url = f'{self.api_url}/repos/{owner}/{repo}/forks'
         response = requests.post(url, headers=headers)
-        ## Check for response status: https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#forks
+        current_app.logger.info(f'Got {response} from {url}')
         return response
 
     def _format_authorization_header(self, access_token: str):
@@ -65,6 +69,5 @@ class GitHub:
         }
         url = f'{self.api_url}/user'
         response = requests.get(url, headers=headers)
-        print(url)
-        print(response.status_code)
+        current_app.logger.info(f'Got {response} from {url}')
         return response

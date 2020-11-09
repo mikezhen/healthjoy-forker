@@ -28,5 +28,4 @@ def callback():
     resp = GitHub(current_app).access_token(session_code)
     session['access_token'] = resp.json()['access_token']
     session['scope'] = resp.json()['scope']
-    print(session['access_token'])
     return redirect('/')
