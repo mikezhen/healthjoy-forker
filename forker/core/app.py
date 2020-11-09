@@ -1,5 +1,7 @@
 from flask import Flask
-from forker.blueprints import auth
+from forker.blueprints import (
+    auth, heartbeat
+)
 
 def create_app(config_file: str=None) -> Flask:
     """Factory to create app instead of global instance.
@@ -17,6 +19,7 @@ def create_app(config_file: str=None) -> Flask:
 
     app.config.from_pyfile('../defaults.cfg')
     app.register_blueprint(auth.bp)
+    app.register_blueprint(heartbeat.bp)
 
     @app.route('/')
     def index():
