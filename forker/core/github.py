@@ -5,8 +5,6 @@ from urllib.parse import urlencode
 class GitHub:
     """Interacts with GitHub for authentication and actions
 
-    Attributes:
-
     """
 
     DEFAULT_API_URL = 'https://api.github.com'
@@ -23,6 +21,7 @@ class GitHub:
             self.app = None
 
     def authorize(self, scope: str=None) -> Response:
+        """Redirects to GitHub auth page"""
         params = {'client_id': self.client_id}
         if scope:
             params['scope'] = scope
@@ -44,8 +43,8 @@ class GitHub:
         return response
 
     def create_fork(self) -> requests.Response:
-        owner = self.app.config.get('GITHUB_REPO_OWNER')
-        repo = self.app.config.get('GITHUB_REPO_NAME')
+        owner = self.app.config.get('GITHUB_FORK_OWNER')
+        repo = self.app.config.get('GITHUB_FORK_NAME')
         headers = {
             'Authorization': self._get_authorization_header(self.access_token)
         }

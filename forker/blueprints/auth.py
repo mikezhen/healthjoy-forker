@@ -11,15 +11,16 @@ def auth():
     if 'access_token' in session:
         return (jsonify({}), 200)
     return (jsonify({}), 401)
-    
 
 @bp.route('/login', methods=['GET'])
 def login():
-    return GitHub(current_app).authorize('public_repo,read:user')
+    scope = current_app.config.get('GITHUB_SCOPES')
+    return GitHub(current_app).authorize(scope)
 
 @bp.route('/callback', methods=['GET'])
 def callback():
     session_code = request.args.get('code')
     response = GitHub(current_app).access_token(session_code)
     session['access_token'] = response.json()['access_token']
+    session['scope'] = response.json()['scope']
     return redirect('/')
