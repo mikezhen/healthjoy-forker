@@ -12,13 +12,15 @@ Alternatively, if you prefer not to install Docker, we can perform the project b
 
 1. Replace the values of `replace_me_with_id` and `replace_me_with_secret` inside the `docker-compose.yml` file with client ID and secret, respectively, of the Github OAuth application. (Reach out to project owner for those values.)
 
-1. From the root directory of the project run the following command:
+2. From the root directory of the project run the following command:
 
 ```bash
 docker-compose up
 ```
 
-1. Open browser to `http://localhost:5000` to access the application.
+It might a few minutes as dependencies need to install and the packages need to build.
+
+3. Open browser to `http://localhost:5000` to access the application.
 
 ## Manual Setup
 
@@ -33,22 +35,22 @@ export GITHUB_CLIENT_ID=value_from_owner
 export GITHUB_CLIENT_SECRET=value_from_owner
 ```
 
-1. Compile the web component to static files for the web app with the following command in root project directory:
+2. Compile the web component to static files for the web app with the following command in root project directory:
 
 ```bash
 npm run --prefix=web build && cp -r web/build forker/static
 ```
 
-1. Run following command to install the local forker package:
+3. Run following command to install the local forker package:
 
 ```bash
 pip3 install .
 ```
 
-1. Start the Flask server:
+4. Start the Flask server:
 
 ```bash
 flask run
 ```
 
-1. Open browser to `http://localhost:5000` to access the application.
+5. Open browser to `http://localhost:5000` to access the application.
